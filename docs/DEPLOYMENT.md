@@ -40,6 +40,12 @@ AutoDMX is designed to run cleanly on Netlify Functions.
 
 Every push to `main` triggers a production deploy. Use **branch deploys** or **deploy previews** for staging environments.
 
+### Build-time configuration
+
+Set `NEXT_PUBLIC_SUPABASE_URL` or `SUPABASE_URL` to the Supabase project URL. If both are set, `NEXT_PUBLIC_SUPABASE_URL` takes precedence. Next.js exposes this public URL to browser code; keep `SUPABASE_SERVICE_ROLE_KEY` and `ENCRYPTION_KEY` private.
+
+The Supabase URL and service-role key must be available during builds because Next.js loads API route modules while collecting page data. `ENCRYPTION_KEY` is checked when encrypting or decrypting credentials at runtime, so it is not required just to build the site. Keep the same key when redeploying to preserve access to existing encrypted credentials.
+
 ---
 
 ## 2️⃣ Vercel

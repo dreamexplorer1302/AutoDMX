@@ -1,14 +1,14 @@
 import crypto from 'crypto';
 
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
-
-if (!ENCRYPTION_KEY) {
-  throw new Error('ENCRYPTION_KEY is not defined in environment variables');
-}
-
 // Derive a 32-byte key from the ENCRYPTION_KEY env var using SHA-256
 const getKey = () => {
-  return crypto.createHash('sha256').update(ENCRYPTION_KEY).digest();
+  // Next.js imports route modules while collecting page data at build time.
+  const encryptionKey = process.env.ENCRYPTION_KEY;
+  if (!encryptionKey) {
+    throw new Error('ENCRYPTION_KEY is not defined in environment variables');
+  }
+
+  return crypto.createHash('sha256').update(encryptionKey).digest();
 };
 
 export function encrypt(text: string): string {
